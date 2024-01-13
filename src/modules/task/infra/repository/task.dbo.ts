@@ -3,7 +3,7 @@ export type TaskDBO = {
   title: string;
   description: string;
   priority: string;
-  isCompleted?: boolean;
+  done?: boolean;
   completionDate: Date;
   createdAt?: Date;
   updatedAt?: Date;

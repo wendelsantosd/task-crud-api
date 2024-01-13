@@ -5,7 +5,7 @@ export type TaskProps = {
   title: string;
   description: string;
   priority: string;
-  isCompleted: boolean;
+  done: boolean;
   completionDate: Date;
   createdAt?: Date;
   updatedAt?: Date;
@@ -34,8 +34,8 @@ export class Task extends Aggregate<TaskProps> {
     return this.props.priority;
   }
 
-  get isCompleted(): boolean {
-    return this.props.isCompleted;
+  get done(): boolean {
+    return this.props.done;
   }
 
   get completionDate(): Date {
@@ -95,7 +95,7 @@ export class Task extends Aggregate<TaskProps> {
       description: props.description ?? this.description,
       priority: props.priority ?? this.priority,
       completionDate: props.completionDate ?? this.completionDate,
-      isCompleted: this.isCompleted,
+      done: this.done,
     });
 
     if (isValid.isFail()) return Result.fail(isValid.error());
