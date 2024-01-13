@@ -6,6 +6,7 @@ export type TaskProps = {
   description: string;
   priority: string;
   completionDate: Date;
+  isCompleted: boolean;
 };
 
 enum PRIORITY {
@@ -33,6 +34,10 @@ export class Task extends Aggregate<TaskProps> {
 
   get completionDate(): Date {
     return this.props.completionDate;
+  }
+
+  get isCompleted(): boolean {
+    return this.props.isCompleted;
   }
 
   private static isValid({
