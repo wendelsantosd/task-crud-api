@@ -12,9 +12,9 @@ export type TaskProps = {
 };
 
 enum PRIORITY {
-  baixa = 'baixa',
-  'média' = 'média',
-  alta = 'alta',
+  Baixa = 'Baixa',
+  'Média' = 'Média',
+  Alta = 'Alta',
 }
 
 export class Task extends Aggregate<TaskProps> {
@@ -56,14 +56,19 @@ export class Task extends Aggregate<TaskProps> {
     if (string(description).isEmpty())
       return Result.fail('A descrição não pode ser vazia.');
 
-    if (date(completionDate).isBeforeNow())
-      return Result.fail('A data de conclusão não pode ser no passado.');
-
     if (string(priority).isEmpty())
       return Result.fail('A prioridade não pode ser vazia.');
 
     if (!PRIORITY[priority])
       return Result.fail('Prioridade inserida inválida.');
+
+    if ('Invalid Date' === completionDate.toDateString())
+      return Result.fail(
+        'Insira uma data válida para a finalização da tarefa.',
+      );
+
+    if (date(completionDate).isBeforeNow())
+      return Result.fail('A data de conclusão não pode ser antiga.');
 
     return Result.Ok();
   }

@@ -1,14 +1,10 @@
 import { Task } from '@modules/task/domain/model/task.aggregate';
 import { ITaskRepository } from '@modules/task/domain/model/task.repository';
 import { AdapterTaskDBOToDomain } from '@modules/task/infra/adapters/task.adapter';
+import { CreateTaskDTO } from '@modules/task/infra/api/dtos/createTask.dto';
 import { IUseCase, Result } from 'types-ddd';
 
-type Request = {
-  title: string;
-  description: string;
-  priority: string;
-  completionDate: string;
-};
+type Request = CreateTaskDTO;
 
 type Response = Task;
 
