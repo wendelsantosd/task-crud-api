@@ -7,6 +7,8 @@ export type TaskProps = {
   priority: string;
   completionDate: Date;
   isCompleted: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 enum PRIORITY {
