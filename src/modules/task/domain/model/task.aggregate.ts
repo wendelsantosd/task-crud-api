@@ -34,12 +34,20 @@ export class Task extends Aggregate<TaskProps> {
     return this.props.priority;
   }
 
+  get isCompleted(): boolean {
+    return this.props.isCompleted;
+  }
+
   get completionDate(): Date {
     return this.props.completionDate;
   }
 
-  get isCompleted(): boolean {
-    return this.props.isCompleted;
+  get createdAt(): Date {
+    return this.props.createdAt;
+  }
+
+  get updatedAt(): Date {
+    return this.props.updatedAt;
   }
 
   private static isValid({

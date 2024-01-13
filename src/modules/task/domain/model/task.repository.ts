@@ -3,7 +3,7 @@ import { Task } from './task.aggregate';
 
 export type Tasks = {
   tasks: Task[];
-  medata: {
+  metadata: {
     count: number;
   };
 };
@@ -13,5 +13,5 @@ export interface ITaskRepository {
   getAll(): Promise<Result<Tasks>>;
   getById(id: string): Promise<Result<Task>>;
   delete(id: string): Promise<Result<string>>;
-  finishTask(id: string): Promise<Result<Task>>;
+  finish(id: string): Promise<Result<Task>>;
 }

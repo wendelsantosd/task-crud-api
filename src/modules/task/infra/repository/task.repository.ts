@@ -37,8 +37,32 @@ export class TaskRepository implements ITaskRepository {
       );
     }
   }
-  getAll(): Promise<Result<Tasks>> {
-    throw new Error('Method not implemented.');
+
+  async getAll(): Promise<Result<Tasks>> {
+    try {
+      const adapterTask = new AdapterTaskDBOToDomain();
+
+      const tasksDB = await this.orm.tasks.findMany();
+
+      const count = await this.orm.tasks.count();
+
+      const preparedTasks = tasksDB.map((task) => adapterTask.prepare(task));
+
+      const buildedTasks = preparedTasks.map((task) =>
+        adapterTask.build(task).value(),
+      );
+
+      return Result.Ok({
+        tasks: buildedTasks,
+        metadata: {
+          count,
+        },
+      });
+    } catch (error) {
+      return Result.fail(
+        `Houve um erro ao listar as tarefas: ${error.message}`,
+      );
+    }
   }
   getById(id: string): Promise<Result<Task>> {
     throw new Error('Method not implemented.');
@@ -46,7 +70,7 @@ export class TaskRepository implements ITaskRepository {
   delete(id: string): Promise<Result<string>> {
     throw new Error('Method not implemented.');
   }
-  finishTask(id: string): Promise<Result<Task>> {
+  finish(id: string): Promise<Result<Task>> {
     throw new Error('Method not implemented.');
   }
 }
