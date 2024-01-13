@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   Param,
@@ -56,7 +57,7 @@ export class TaskController {
       });
 
     return response.status(HttpStatus.OK).json({
-      message: 'Tarefa criada com sucesso',
+      message: 'Tarefa criada com sucesso.',
     });
   }
 
@@ -74,7 +75,21 @@ export class TaskController {
       });
 
     return response.status(HttpStatus.OK).json({
-      message: 'Tarefa alterada com sucesso',
+      message: 'Tarefa alterada com sucesso.',
+    });
+  }
+
+  @Delete('/:id')
+  async deleteTask(@Param('id') id: string, @Res() response: Response) {
+    const result = await this.taskService.delete(id);
+
+    if (result.isFail())
+      return response.status(HttpStatus.BAD_REQUEST).json({
+        message: result.error(),
+      });
+
+    return response.status(HttpStatus.OK).json({
+      message: result.value(),
     });
   }
 }

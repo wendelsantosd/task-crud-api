@@ -1,4 +1,5 @@
 import { makeCreateTask } from '@modules/task/application/factories/createTask.factory';
+import { makeDeleteTask } from '@modules/task/application/factories/makedeleTask.factory';
 import { makeGetTaskById } from '@modules/task/application/factories/makeGetTaskById.factory';
 import { makeGetTasks } from '@modules/task/application/factories/makeGetTasks.factory ';
 import { makeUpdateTask } from '@modules/task/application/factories/makeUpdateTask.factory';
@@ -32,11 +33,19 @@ export class TaskService {
 
     if (task.isFail()) return Result.fail(task.error());
 
-    return Result.Ok(task.value());
+    return task;
   }
 
   async update(data: UpdateTaskDTO, id: string): Promise<Result<Task>> {
     const task = await makeUpdateTask().execute({ data, id });
+
+    if (task.isFail()) return Result.fail(task.error());
+
+    return task;
+  }
+
+  async delete(id: string): Promise<Result<string>> {
+    const task = await makeDeleteTask().execute({ id });
 
     if (task.isFail()) return Result.fail(task.error());
 

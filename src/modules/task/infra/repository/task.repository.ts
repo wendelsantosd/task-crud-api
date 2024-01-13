@@ -33,7 +33,7 @@ export class TaskRepository implements ITaskRepository {
       return Result.Ok(buildedTask.value());
     } catch (error) {
       return Result.fail(
-        `Houve um erro ao ${task.id.value() ? 'alterar' : 'adicionar'} a tarefa: ${error.message}`,
+        `Houve um erro ao ${task.id.value() ? 'alterar' : 'adicionar'} a tarefa: ${error.message}.`,
       );
     }
   }
@@ -60,7 +60,7 @@ export class TaskRepository implements ITaskRepository {
       });
     } catch (error) {
       return Result.fail(
-        `Houve um erro ao listar as tarefas: ${error.message}`,
+        `Houve um erro ao listar as tarefas: ${error.message}.`,
       );
     }
   }
@@ -73,7 +73,7 @@ export class TaskRepository implements ITaskRepository {
         where: { id },
       });
 
-      if (!taskDB) return Result.fail('Tarefa não encontrada');
+      if (!taskDB) return Result.fail('Tarefa não encontrada.');
 
       const preparedTask = adapterTask.prepare(taskDB);
       const buildedTask = adapterTask.build(preparedTask);
@@ -81,13 +81,23 @@ export class TaskRepository implements ITaskRepository {
       return Result.Ok(buildedTask.value());
     } catch (error) {
       return Result.fail(
-        `Houve um erro interno ao buscar a tarefa: ${error.message}`,
+        `Houve um erro interno ao buscar a tarefa: ${error.message}.`,
       );
     }
   }
 
   async delete(id: string): Promise<Result<string>> {
-    throw new Error('Method not implemented.');
+    try {
+      await this.orm.tasks.delete({
+        where: { id },
+      });
+
+      return Result.Ok('Tarefa deletada com sucesso.');
+    } catch (error) {
+      return Result.fail(
+        `Houve um erro ao tentar deletar a tarefa: ${error.message}.`,
+      );
+    }
   }
 
   async finish(id: string): Promise<Result<Task>> {
