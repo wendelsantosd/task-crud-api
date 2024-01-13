@@ -7,7 +7,6 @@ import { PrismaService } from '@shared/infra/db/prisma.service';
 import { Result } from 'types-ddd';
 import { AdapterTaskDBOToDomain } from '../adapters/task.adapter';
 import { TaskDBO } from './task.dbo';
-
 export class TaskRepository implements ITaskRepository {
   constructor(private readonly orm: PrismaService) {}
 

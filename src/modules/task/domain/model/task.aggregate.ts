@@ -5,8 +5,8 @@ export type TaskProps = {
   title: string;
   description: string;
   priority: string;
-  completionDate: Date;
   isCompleted: boolean;
+  completionDate: Date;
   createdAt?: Date;
   updatedAt?: Date;
 };
