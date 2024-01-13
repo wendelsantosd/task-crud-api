@@ -1,3 +1,4 @@
+import { Task } from '@modules/task/domain/model/task.aggregate';
 import { Tasks } from '@modules/task/domain/model/task.repository';
 
 type TaskPresenterProps = {
@@ -5,7 +6,7 @@ type TaskPresenterProps = {
   title: string;
   description: string;
   priority: string;
-  isCompleted?: boolean;
+  done?: boolean;
   completionDate: Date;
   createdAt?: Date;
   updatedAt?: Date;
@@ -35,6 +36,20 @@ export class TasksPresenter {
     return {
       tasks,
       metadata: { count: data.metadata.count },
+    };
+  }
+}
+
+export class TaskPresenter {
+  public toPresenter(task: Task): TaskPresenterProps {
+    return {
+      id: task.id.value(),
+      title: task.title,
+      description: task.description,
+      priority: task.priority,
+      completionDate: task.completionDate,
+      createdAt: task.createdAt,
+      updatedAt: task.updatedAt,
     };
   }
 }

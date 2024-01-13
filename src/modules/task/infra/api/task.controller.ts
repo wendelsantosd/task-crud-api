@@ -9,7 +9,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { TasksPresenter } from '../presenters/task.presenter';
+import { TaskPresenter, TasksPresenter } from '../presenters/task.presenter';
 import { CreateTaskDTO } from './dtos/createTask.dto';
 import { UpdateTaskDTO } from './dtos/updateTask.dto';
 import { TaskService } from './task.service';
@@ -30,6 +30,20 @@ export class TaskController {
     return response
       .status(HttpStatus.OK)
       .json(new TasksPresenter().toPresenter(result.value()));
+  }
+
+  @Get('/:id')
+  async getTaskById(@Param('id') id: string, @Res() response: Response) {
+    const result = await this.taskService.findById(id);
+
+    if (result.isFail())
+      return response.status(HttpStatus.NOT_FOUND).json({
+        message: result.error(),
+      });
+
+    return response
+      .status(HttpStatus.OK)
+      .json(new TaskPresenter().toPresenter(result.value()));
   }
 
   @Post()

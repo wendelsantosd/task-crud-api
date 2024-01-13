@@ -1,4 +1,5 @@
 import { makeCreateTask } from '@modules/task/application/factories/createTask.factory';
+import { makeGetTaskById } from '@modules/task/application/factories/makeGetTaskById.factory';
 import { makeGetTasks } from '@modules/task/application/factories/makeGetTasks.factory ';
 import { makeUpdateTask } from '@modules/task/application/factories/makeUpdateTask.factory';
 import { Task } from '@modules/task/domain/model/task.aggregate';
@@ -16,6 +17,14 @@ export class TaskService {
     if (task.isFail()) return Result.fail(task.error());
 
     return Result.Ok(task.value());
+  }
+
+  async findById(id: string): Promise<Result<Task>> {
+    const task = await makeGetTaskById().execute({ id });
+
+    if (task.isFail()) return Result.fail(task.error());
+
+    return task;
   }
 
   async create(data: CreateTaskDTO): Promise<Result<Task>> {
