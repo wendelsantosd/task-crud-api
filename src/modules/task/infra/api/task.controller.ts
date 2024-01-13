@@ -1,7 +1,17 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Res,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { TasksPresenter } from '../presenters/task.presenter';
 import { CreateTaskDTO } from './dtos/createTask.dto';
+import { UpdateTaskDTO } from './dtos/updateTask.dto';
 import { TaskService } from './task.service';
 
 @Controller('task')
@@ -33,6 +43,24 @@ export class TaskController {
 
     return response.status(HttpStatus.OK).json({
       message: 'Tarefa criada com sucesso',
+    });
+  }
+
+  @Put('/:id')
+  async updateTask(
+    @Param('id') id: string,
+    @Body() data: UpdateTaskDTO,
+    @Res() response: Response,
+  ) {
+    const result = await this.taskService.update(data, id);
+
+    if (result.isFail())
+      return response.status(HttpStatus.BAD_REQUEST).json({
+        message: result.error(),
+      });
+
+    return response.status(HttpStatus.OK).json({
+      message: 'Tarefa alterada com sucesso',
     });
   }
 }

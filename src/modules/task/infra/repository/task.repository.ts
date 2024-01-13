@@ -64,13 +64,33 @@ export class TaskRepository implements ITaskRepository {
       );
     }
   }
-  getById(id: string): Promise<Result<Task>> {
+
+  async getById(id: string): Promise<Result<Task>> {
+    try {
+      const adapterTask = new AdapterTaskDBOToDomain();
+
+      const taskDB = await this.orm.tasks.findUnique({
+        where: { id },
+      });
+
+      if (!taskDB) return Result.fail('Tarefa não encontrada');
+
+      const preparedTask = adapterTask.prepare(taskDB);
+      const buildedTask = adapterTask.build(preparedTask);
+
+      return Result.Ok(buildedTask.value());
+    } catch (error) {
+      return Result.fail(
+        `Houve um erro interno ao buscar a tarefa: ${error.message}`,
+      );
+    }
+  }
+
+  async delete(id: string): Promise<Result<string>> {
     throw new Error('Method not implemented.');
   }
-  delete(id: string): Promise<Result<string>> {
-    throw new Error('Method not implemented.');
-  }
-  finish(id: string): Promise<Result<Task>> {
+
+  async finish(id: string): Promise<Result<Task>> {
     throw new Error('Method not implemented.');
   }
 }

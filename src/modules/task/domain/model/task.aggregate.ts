@@ -88,4 +88,24 @@ export class Task extends Aggregate<TaskProps> {
 
     return Result.Ok(new Task(props));
   }
+
+  public update(props: Partial<TaskProps>): Result<void> {
+    const isValid = Task.isValid({
+      title: props.title ?? this.title,
+      description: props.description ?? this.description,
+      priority: props.priority ?? this.priority,
+      completionDate: props.completionDate ?? this.completionDate,
+      isCompleted: this.isCompleted,
+    });
+
+    if (isValid.isFail()) return Result.fail(isValid.error());
+
+    if (props.title) this.change('title', props.title);
+    if (props.description) this.change('description', props.description);
+    if (props.priority) this.change('priority', props.priority);
+    if (props.completionDate)
+      this.change('completionDate', props.completionDate);
+
+    return Result.Ok();
+  }
 }
