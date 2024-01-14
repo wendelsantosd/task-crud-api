@@ -101,8 +101,4 @@ export class TaskRepository implements ITaskRepository {
       );
     }
   }
-
-  async finish(id: string): Promise<Result<Task>> {
-    throw new Error('Method not implemented.');
-  }
 }
