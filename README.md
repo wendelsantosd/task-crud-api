@@ -52,7 +52,7 @@ yarn start:dev
 docker compose -f docker-compose.local.yml up -d
 ```
 
-2. Run migrations:
+2. Push DB:
 
 ```shell
 yarn prisma db push
