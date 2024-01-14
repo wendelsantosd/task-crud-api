@@ -10,7 +10,7 @@ type Response = string;
 export class DeleteTaskUseCase implements IUseCase<Request, Result<Response>> {
   constructor(private readonly taskRepository: ITaskRepository) {}
 
-  public async execute({ id }: Request): Promise<Result<string>> {
+  public async execute({ id }: Request): Promise<Result<Response>> {
     const task = await this.taskRepository.getById(id);
 
     if (task.isFail()) return Result.fail(task.error());

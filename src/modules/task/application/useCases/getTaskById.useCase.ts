@@ -11,7 +11,7 @@ type Response = Task;
 export class GetTaskByIdUseCase implements IUseCase<Request, Result<Response>> {
   constructor(private readonly taskRepository: ITaskRepository) {}
 
-  public async execute({ id }: Request): Promise<Result<Task>> {
+  public async execute({ id }: Request): Promise<Result<Response>> {
     const task = await this.taskRepository.getById(id);
 
     if (task.isFail()) return Result.fail(task.error());

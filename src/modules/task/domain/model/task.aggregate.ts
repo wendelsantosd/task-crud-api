@@ -5,16 +5,21 @@ export type TaskProps = {
   title: string;
   description: string;
   priority: string;
-  done: boolean;
+  status: string;
   completionDate: Date;
   createdAt?: Date;
   updatedAt?: Date;
 };
 
-enum PRIORITY {
+export enum PriorityEnum {
   Baixa = 'Baixa',
   'Média' = 'Média',
   Alta = 'Alta',
+}
+
+export enum StatusEnum {
+  'Concluído' = 'Concluído',
+  'Não concluído' = 'Não concluído',
 }
 
 export class Task extends Aggregate<TaskProps> {
@@ -34,8 +39,8 @@ export class Task extends Aggregate<TaskProps> {
     return this.props.priority;
   }
 
-  get done(): boolean {
-    return this.props.done;
+  get status(): string {
+    return this.props.status;
   }
 
   get completionDate(): Date {
@@ -55,6 +60,7 @@ export class Task extends Aggregate<TaskProps> {
     description,
     completionDate,
     priority,
+    status,
   }: TaskProps): Result<void> {
     const { string, date } = this.validator;
 
@@ -67,8 +73,10 @@ export class Task extends Aggregate<TaskProps> {
     if (string(priority).isEmpty())
       return Result.fail('A prioridade não pode ser vazia.');
 
-    if (!PRIORITY[priority])
+    if (!PriorityEnum[priority])
       return Result.fail('Prioridade inserida inválida.');
+
+    if (status && !StatusEnum[status]) return Result.fail('Status inválido.');
 
     if ('Invalid Date' === completionDate.toDateString())
       return Result.fail(
@@ -95,7 +103,7 @@ export class Task extends Aggregate<TaskProps> {
       description: props.description ?? this.description,
       priority: props.priority ?? this.priority,
       completionDate: props.completionDate ?? this.completionDate,
-      done: this.done,
+      status: this.status,
     });
 
     if (isValid.isFail()) return Result.fail(isValid.error());
@@ -105,6 +113,14 @@ export class Task extends Aggregate<TaskProps> {
     if (props.priority) this.change('priority', props.priority);
     if (props.completionDate)
       this.change('completionDate', props.completionDate);
+
+    return Result.Ok();
+  }
+
+  public changeDone(status: string): Result<void> {
+    if (!StatusEnum[status]) return Result.fail('Status inválido.');
+
+    this.change('status', status);
 
     return Result.Ok();
   }

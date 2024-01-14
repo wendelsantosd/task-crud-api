@@ -6,7 +6,7 @@ type TaskPresenterProps = {
   title: string;
   description: string;
   priority: string;
-  done?: boolean;
+  status: string;
   completionDate: Date;
   createdAt?: Date;
   updatedAt?: Date;
@@ -27,6 +27,7 @@ export class TasksPresenter {
         title: task.title,
         description: task.description,
         priority: task.priority,
+        status: task.status,
         completionDate: task.completionDate,
         createdAt: task.createdAt,
         updatedAt: task.updatedAt,
@@ -47,6 +48,7 @@ export class TaskPresenter {
       title: task.title,
       description: task.description,
       priority: task.priority,
+      status: task.status,
       completionDate: task.completionDate,
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,

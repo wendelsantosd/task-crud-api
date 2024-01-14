@@ -21,6 +21,8 @@ export class TaskRepository implements ITaskRepository {
         completionDate: task.completionDate,
       };
 
+      if (task.status) data.status = task.status;
+
       const taskDB = await this.orm.tasks.upsert({
         create: data,
         update: data,

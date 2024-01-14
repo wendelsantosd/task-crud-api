@@ -5,6 +5,7 @@ import {
   Get,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Put,
   Res,
@@ -12,6 +13,7 @@ import {
 import { Response } from 'express';
 import { TaskPresenter, TasksPresenter } from '../presenters/task.presenter';
 import { CreateTaskDTO } from './dtos/createTask.dto';
+import { StatusTaskDTO } from './dtos/doneTask.dto';
 import { UpdateTaskDTO } from './dtos/updateTask.dto';
 import { TaskService } from './task.service';
 
@@ -82,6 +84,24 @@ export class TaskController {
   @Delete('/:id')
   async deleteTask(@Param('id') id: string, @Res() response: Response) {
     const result = await this.taskService.delete(id);
+
+    if (result.isFail())
+      return response.status(HttpStatus.BAD_REQUEST).json({
+        message: result.error(),
+      });
+
+    return response.status(HttpStatus.OK).json({
+      message: result.value(),
+    });
+  }
+
+  @Patch('/:id')
+  async doneTask(
+    @Param('id') id: string,
+    @Body() data: StatusTaskDTO,
+    @Res() response: Response,
+  ) {
+    const result = await this.taskService.status(id, data.status);
 
     if (result.isFail())
       return response.status(HttpStatus.BAD_REQUEST).json({

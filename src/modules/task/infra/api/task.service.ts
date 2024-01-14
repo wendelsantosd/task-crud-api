@@ -1,5 +1,6 @@
 import { makeCreateTask } from '@modules/task/application/factories/createTask.factory';
-import { makeDeleteTask } from '@modules/task/application/factories/makedeleTask.factory';
+import { makeDeleteTask } from '@modules/task/application/factories/makeDeleteTask.factory';
+import { makeStatusTask } from '@modules/task/application/factories/makeStatusTask.factory';
 import { makeGetTaskById } from '@modules/task/application/factories/makeGetTaskById.factory';
 import { makeGetTasks } from '@modules/task/application/factories/makeGetTasks.factory ';
 import { makeUpdateTask } from '@modules/task/application/factories/makeUpdateTask.factory';
@@ -45,10 +46,18 @@ export class TaskService {
   }
 
   async delete(id: string): Promise<Result<string>> {
-    const task = await makeDeleteTask().execute({ id });
+    const message = await makeDeleteTask().execute({ id });
 
-    if (task.isFail()) return Result.fail(task.error());
+    if (message.isFail()) return Result.fail(message.error());
 
-    return task;
+    return message;
+  }
+
+  async status(id: string, status: string): Promise<Result<string>> {
+    const message = await makeStatusTask().execute({ id, status });
+
+    if (message.isFail()) return Result.fail(message.error());
+
+    return message;
   }
 }
