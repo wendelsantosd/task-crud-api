@@ -76,7 +76,7 @@ export class Task extends Aggregate<TaskProps> {
     if (!PriorityEnum[priority])
       return Result.fail('Prioridade inserida inválida.');
 
-    if (status && !StatusEnum[status]) return Result.fail('Status inválido.');
+    if (!StatusEnum[status]) return Result.fail('Status inválido.');
 
     if ('Invalid Date' === completionDate.toDateString())
       return Result.fail(

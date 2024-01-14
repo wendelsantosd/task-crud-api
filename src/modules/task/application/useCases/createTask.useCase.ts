@@ -14,6 +14,7 @@ export class CreateTaskUseCase implements IUseCase<Request, Result<Response>> {
   public async execute(data: Request): Promise<Result<Response>> {
     const toAdapt = new AdapterTaskDBOToDomain().build({
       ...data,
+      status: 'Não concluído',
       completionDate: new Date(data.completionDate),
     });
 
