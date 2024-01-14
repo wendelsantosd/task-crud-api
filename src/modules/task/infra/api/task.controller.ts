@@ -13,7 +13,7 @@ import {
 import { Response } from 'express';
 import { TaskPresenter, TasksPresenter } from '../presenters/task.presenter';
 import { CreateTaskDTO } from './dtos/createTask.dto';
-import { StatusTaskDTO } from './dtos/doneTask.dto';
+import { StatusTaskDTO } from './dtos/statusTask.dto';
 import { UpdateTaskDTO } from './dtos/updateTask.dto';
 import { TaskService } from './task.service';
 
