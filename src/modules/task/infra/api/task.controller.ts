@@ -60,6 +60,7 @@ export class TaskController {
 
     return response.status(HttpStatus.OK).json({
       message: 'Tarefa criada com sucesso.',
+      task: new TaskPresenter().toPresenter(result.value()),
     });
   }
 
