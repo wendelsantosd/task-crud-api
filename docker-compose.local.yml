@@ -3,7 +3,7 @@ version: '3.9'
 services:
   postgres:
     image: postgres:latest
-    container_name: 'postgres-brain-agriculture'
+    container_name: 'postgres-task-crud'
     ports:
       - '5432:5432'
     volumes:
