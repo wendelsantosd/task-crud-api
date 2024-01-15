@@ -79,6 +79,7 @@ export class TaskController {
 
     return response.status(HttpStatus.OK).json({
       message: 'Tarefa alterada com sucesso.',
+      task: new TaskPresenter().toPresenter(result.value()),
     });
   }
 
