@@ -3,7 +3,7 @@ export type TaskDBO = {
   title: string;
   description: string;
   priority: string;
-  status?: string;
+  status: string;
   completionDate: Date;
   createdAt?: Date;
   updatedAt?: Date;
