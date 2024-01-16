@@ -75,7 +75,7 @@ body: {
     "title": "Tarefa 1",
     "description": "Descrição da tarefa 1",
     "priority": "Média",
-    "completionDate": "2024-01-15T23:59:59.148Z"
+    "completionDate": "2024-01-24"
 }
 ```
 
@@ -94,7 +94,7 @@ body: {
     "title": "Tarefa 1 Edit",
     "description": "Descrição da tarefa 1 Edit",
     "priority": "Alta",
-    "completionDate": "2024-01-15T23:59:59.148Z"
+    "completionDate": "2024-01-24"
 }
 ```
 
