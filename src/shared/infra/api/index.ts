@@ -8,6 +8,6 @@ export const bootstrapAPI = async () => {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
   app.use(json({ limit: '20mb' }));
-
+  app.enableShutdownHooks();
   await app.listen(server.port ?? '3000');
 };
